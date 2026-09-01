@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/29 11:49:17 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/01 18:05:50 by cacortes         ###   ########.fr       */
+/*   Created: 2026/09/01 11:52:11 by cacortes          #+#    #+#             */
+/*   Updated: 2026/09/01 12:23:16 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALAR_HPP
-#define SCALAR_HPP
+#include "ScalarConverter.hpp"
 
-#include <iostream>
-#include <climits>
-
-class	ScalarConverter
+int	main(int argc, char **argv)
 {
-	public:
-		ScalarConverter();
-		ScalarConverter(const ScalarConverter &other);
-		ScalarConverter &operator=(const ScalarConverter &value);
-		~ScalarConverter();
-		
-		static void convert(std::string lit);
-};
+	if (argc != 2)
+	{
+		std::cout << "The program needs only one argument to convert." << std::endl;
+		return 1;
+	}
 
-#endif
+	ScalarConverter::convert(argv[1]);
+
+	return (0);
+}

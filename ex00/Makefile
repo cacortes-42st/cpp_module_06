@@ -6,13 +6,12 @@
 #    By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/08/29 10:53:29 by cacortes          #+#    #+#              #
-#    Updated: 2026/08/29 10:53:34 by cacortes         ###   ########.fr        #
+#    Updated: 2026/09/01 12:23:51 by cacortes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
-SRCS = src/main.cpp src/Bureaucrat.cpp src/AForm.cpp src/ShrubberyCreationForm.cpp src/RobotomyRequestForm.cpp src/PresidentialPardonForm.cpp src/Intern.cpp
-NAME = coffee-making
+SRCS = src/main.cpp src/ScalarConverter.cpp
+NAME = convert
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -Iinclude
