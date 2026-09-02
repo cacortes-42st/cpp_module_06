@@ -6,7 +6,7 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 11:39:02 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/01 20:41:20 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/02 17:10:12 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	isInt(std::string lit)
 int	isFloat(std::string lit)
 {
 	size_t i = 0;
+	int	f = 0;
+	int	p = 0;
 
 	if (lit.empty())
 		return (1);
@@ -79,7 +81,15 @@ int	isFloat(std::string lit)
 		return (1);
 	while (i < lit.length())
 	{
-		if (!std::isdigit(lit[i]) && lit[i] != '.' && lit[i] != 'f')
+		if (lit[i] == 'f')
+			f++;
+		if (lit[i] == '.')
+		{
+			p++;
+			if (lit[i + 1] == 'f')
+				return (1);
+		}
+		if ((!std::isdigit(lit[i]) && lit[i] != '.' && lit[i] != 'f') || f > 1 || p > 1)
 			return (1);
 		i++;
 	}
@@ -90,6 +100,7 @@ int	isFloat(std::string lit)
 int	isDouble(std::string lit)
 {
 	size_t i = 0;
+	int	p = 0;
 
 	if (lit.empty())
 		return (1);
@@ -97,7 +108,13 @@ int	isDouble(std::string lit)
 		i++;
 	while (i < lit.length())
 	{
-		if (!std::isdigit(lit[i]) && lit[i] != '.')
+		if (lit[i] == '.')
+		{
+			p++;
+			if (lit[i + 1] == 'f' || !std::isdigit(lit[i + 1]) || !std::isdigit(lit[i - 1]))
+				return (1);
+		}
+		if ((!std::isdigit(lit[i]) && lit[i] != '.') || p > 1)
 			return (1);
 		i++;
 	}
