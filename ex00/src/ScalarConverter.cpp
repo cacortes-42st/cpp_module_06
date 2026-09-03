@@ -6,7 +6,7 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 11:39:02 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/02 17:10:12 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/03 14:37:56 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,21 @@ ScalarConverter::~ScalarConverter()
 }
 
 
-int	isChar(std::string lit)
+
+int	charConv(std::string lit, resultPrint result)
+{
+	char	c;
+	(void)result;
+	
+	c = lit[0];
+	result.chr = c;
+	
+	std::cout << "Char conversion done." << std::endl;
+
+	return (0);
+}
+
+int	isChar(std::string lit, resultPrint result)
 {
 	char charLit;
 	
@@ -46,6 +60,25 @@ int	isChar(std::string lit)
 	charLit = lit[0];
 	if (lit.size() > 1 || std::isdigit(charLit))
 		return (1);
+
+	charConv(lit, result);
+	return (0);
+}
+
+int	intConv(std::string lit, resultPrint result)
+{
+	int	n;
+	(void)result;
+	
+	n = std::atoi(lit[0]);
+
+	if (n < INT_MIN && n > INT_MAX || n == 0)
+		return (1);
+
+	result.in = n;
+	
+	std::cout << "Int conversion done." << std::endl;
+
 	return (0);
 }
 
@@ -122,9 +155,9 @@ int	isDouble(std::string lit)
 	return (0);
 }
 
-int	detector(std::string lit)
+int	detector(std::string lit, resultPrint result)
 {
-	if (!isChar(lit))
+	if (!isChar(lit, result))
 		std::cout << "CHAR" << std::endl;
 	else if (!isInt(lit))
 		std::cout << "INT" << std::endl;
@@ -137,9 +170,9 @@ int	detector(std::string lit)
 	return (0);
 }
 
-void ScalarConverter::convert(std::string lit)
+void ScalarConverter::convert(std::string lit, resultPrint result)
 {
-	if (!detector(lit))
+	if (!detector(lit, result))
 		std::cout << "GOOD" << std::endl;
 	else
 		std::cout << "BAD" << std::endl;

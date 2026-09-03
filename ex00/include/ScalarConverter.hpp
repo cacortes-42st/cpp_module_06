@@ -6,7 +6,7 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 11:49:17 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/01 18:05:50 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/03 12:31:18 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 #include <iostream>
 #include <climits>
 
+struct	resultPrint
+{
+	char	chr;
+	int		in;
+	float	flt;
+	double	dbl;
+};
+
 class	ScalarConverter
 {
 	public:
@@ -24,7 +32,7 @@ class	ScalarConverter
 		ScalarConverter &operator=(const ScalarConverter &value);
 		~ScalarConverter();
 		
-		static void convert(std::string lit);
+		static void convert(std::string lit, resultPrint result);
 };
 
 #endif
