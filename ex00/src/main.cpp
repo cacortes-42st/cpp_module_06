@@ -6,13 +6,13 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/01 11:52:11 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/03 20:50:48 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/04 11:01:44 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 
-void	initStruct(resultPrint result)
+void	initStruct(resultPrint &result)
 {
 	(void)result;
 	result.psd = false;

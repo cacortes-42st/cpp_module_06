@@ -6,7 +6,7 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 11:39:02 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/03 23:03:12 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/04 14:49:32 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,46 @@ int	charConv(std::string lit, resultPrint &result)
 	(void)result;
 	char	*end;
 	
-	c = static_cast<char>(lit[0]);
+	long value = std::strtol(lit.c_str(), &end, 10);
 
+	if (*end != '\0')
+	{
+		if (*end == '.')
+		{
+				if (lit[lit.length() - 1] == 'f')
+				{
+					float f = std::strtof(lit.c_str(), &end);
+					c = static_cast<char>(f);
+				}
+				else
+				{
+					double d = std::strtof(lit.c_str(), &end);
+					c = static_cast<char>(d);					
+				}
+				if (!std::isprint(c))
+				{
+					std::cout << "FLAG" << std::endl;
+					c = '\0';
+					return (0);
+				}
+		}
+		else
+			c = static_cast<char>(lit[0]);
+		result.chr = c;
+		std::cout << "Char conversion done." << std::endl;
+		return (0);
+	}
+
+	c = static_cast<char>(value);
+	
 	if (!std::isprint(c))
 	{
 		std::cout << "FLAG" << std::endl;
 		c = '\0';
+		return (0);
 	}
 
+	c = static_cast<char>(lit[0]);
 	if (std::isdigit(lit[0]))
 	{
 		double value = std::strtod(lit.c_str(), &end);
@@ -66,7 +98,7 @@ int	charConv(std::string lit, resultPrint &result)
 	}
 	result.chr = c;
 	
-	std::cout << "Char conversion done." << std::endl;
+	
 
 	return (0);
 }
@@ -98,14 +130,31 @@ int	intConv(std::string lit, resultPrint &result)
 	char	*end;
 	long	n;
 	(void)result;
+	int	i = 0;
 
 	n = std::strtol(lit.c_str(), &end, 10);
-	
+	std::cout << "Valor del final: " << n << std::endl;
+
 	if (n < INT_MIN || n > INT_MAX)
 		return (1);
-
-	result.in = static_cast<int>(n);
-	
+	if (*end != '\0')
+	{
+		if (lit.length() == 1 && !std::isdigit(lit[0]))
+			i = static_cast<int>(lit[0]);
+		else if (lit[lit.length() - 1] == 'f')
+		{
+			float f = std::strtof(lit.c_str(), &end);
+			i = static_cast<int>(f);
+		}
+		else if(*end == '.')
+		{
+			double d = std::strtof(lit.c_str(), &end);
+			i = static_cast<int>(d);					
+		}
+	}
+	else
+		i = static_cast<int>(n);
+	result.in = i;
 	std::cout << "Int conversion done." << std::endl;
 
 	return (0);
@@ -145,13 +194,20 @@ int	fltConv(std::string lit, resultPrint &result)
 	char	*end;
 	float	n;
 	(void)result;
+	float f = 0;
 
 	n = std::strtof(lit.c_str(), &end);
 	
 	if (n < INT_MIN || n > INT_MAX)
 		return (1);
-
-	result.flt = static_cast<float>(n);
+	if (*end != '\0')
+	{
+		if (!std::isdigit(lit[0]))
+			f = static_cast<float>(lit[0]);
+	}
+	else
+		f = static_cast<float>(n);
+	result.flt = f;
 	
 	std::cout << "Float conversion done." << std::endl;
 
@@ -201,13 +257,20 @@ int	dblConv(std::string lit, resultPrint &result)
 	char	*end;
 	double	n;
 	(void)result;
+	double d = 0;
 
 	n = std::strtod(lit.c_str(), &end);
 	
 	if (n < INT_MIN || n > INT_MAX)
 		return (1);
-
-	result.dbl = static_cast<double>(n);
+	if (*end != '\0')
+	{
+		if (!std::isdigit(lit[0]))
+			d = static_cast<double>(lit[0]);
+	}
+	else
+		d = static_cast<double>(n);
+	result.dbl = d;
 	
 	std::cout << "Double conversion done." << std::endl;
 
