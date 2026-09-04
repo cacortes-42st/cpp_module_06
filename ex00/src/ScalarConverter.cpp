@@ -6,7 +6,7 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 11:39:02 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/04 14:49:32 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/04 16:00:59 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,12 +200,15 @@ int	fltConv(std::string lit, resultPrint &result)
 	
 	if (n < INT_MIN || n > INT_MAX)
 		return (1);
-	if (*end != '\0')
+	/*if (*end != '\0') // If I add this, works with chars, fails with floats. If I comment it, works with floats fails with chars
 	{
-		if (!std::isdigit(lit[0]))
+		if (lit.length() == 1 && !std::isdigit(lit[0]))
+		{
+			std::cout << "BANDERA" << std::endl;
 			f = static_cast<float>(lit[0]);
+		}
 	}
-	else
+	else*/
 		f = static_cast<float>(n);
 	result.flt = f;
 	
