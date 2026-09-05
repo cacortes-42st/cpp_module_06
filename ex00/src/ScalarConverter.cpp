@@ -6,7 +6,7 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 11:39:02 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/04 16:00:59 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/05 19:53:01 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,11 @@ int	charConv(std::string lit, resultPrint &result)
 				}
 				else
 				{
-					double d = std::strtof(lit.c_str(), &end);
+					double d = std::strtod(lit.c_str(), &end);
 					c = static_cast<char>(d);					
 				}
-				if (!std::isprint(c))
+				if (!std::isprint(static_cast<unsigned char>(c)))
 				{
-					std::cout << "FLAG" << std::endl;
 					c = '\0';
 					return (0);
 				}
@@ -74,31 +73,35 @@ int	charConv(std::string lit, resultPrint &result)
 		else
 			c = static_cast<char>(lit[0]);
 		result.chr = c;
-		std::cout << "Char conversion done." << std::endl;
+		
 		return (0);
 	}
 
-	c = static_cast<char>(value);
-	
-	if (!std::isprint(c))
+	if (value < 0 || value > 127)
 	{
-		std::cout << "FLAG" << std::endl;
+		result.NoPrint = true;
+		return (0);
+	}
+	if (!std::isprint(value))
+	{
 		c = '\0';
 		return (0);
 	}
-
-	c = static_cast<char>(lit[0]);
+	
 	if (std::isdigit(lit[0]))
 	{
 		double value = std::strtod(lit.c_str(), &end);
 		if (value < 0 || value > 127)
+		{
+			result.NoPrint = true;
 			return (1);
+		}
 		result.chr = static_cast<char>(value);
     	return (0);
 	}
-	result.chr = c;
-	
-	
+	else
+		c = static_cast<char>(lit[0]);
+	result.chr = c;	
 
 	return (0);
 }
@@ -133,10 +136,11 @@ int	intConv(std::string lit, resultPrint &result)
 	int	i = 0;
 
 	n = std::strtol(lit.c_str(), &end, 10);
-	std::cout << "Valor del final: " << n << std::endl;
-
 	if (n < INT_MIN || n > INT_MAX)
-		return (1);
+	{
+		result.MaxMin = true;
+		return (0);
+	}
 	if (*end != '\0')
 	{
 		if (lit.length() == 1 && !std::isdigit(lit[0]))
@@ -144,18 +148,28 @@ int	intConv(std::string lit, resultPrint &result)
 		else if (lit[lit.length() - 1] == 'f')
 		{
 			float f = std::strtof(lit.c_str(), &end);
+			if (f < INT_MIN || f > INT_MAX)
+			{
+				result.MaxMin = true;
+				return (0);
+			}
 			i = static_cast<int>(f);
 		}
 		else if(*end == '.')
 		{
-			double d = std::strtof(lit.c_str(), &end);
+			double d = std::strtod(lit.c_str(), &end);
+			if (d < INT_MIN || d > INT_MAX)
+			{
+				result.MaxMin = true;
+				return (0);
+			}
 			i = static_cast<int>(d);					
 		}
 	}
 	else
 		i = static_cast<int>(n);
+
 	result.in = i;
-	std::cout << "Int conversion done." << std::endl;
 
 	return (0);
 }
@@ -198,22 +212,22 @@ int	fltConv(std::string lit, resultPrint &result)
 
 	n = std::strtof(lit.c_str(), &end);
 	
-	if (n < INT_MIN || n > INT_MAX)
-		return (1);
-	/*if (*end != '\0') // If I add this, works with chars, fails with floats. If I comment it, works with floats fails with chars
+	if (*end == '\0')
+	{
+		double d = std::strtod(lit.c_str(), &end);
+		f = static_cast<float>(d);				
+	}
+	else if (*end == 'f' && lit.length() == 1)
+		f = static_cast<float>(*end);
+	else if (*end != 'f')
 	{
 		if (lit.length() == 1 && !std::isdigit(lit[0]))
-		{
-			std::cout << "BANDERA" << std::endl;
 			f = static_cast<float>(lit[0]);
-		}
 	}
-	else*/
+	else
 		f = static_cast<float>(n);
 	result.flt = f;
 	
-	std::cout << "Float conversion done." << std::endl;
-
 	return (0);
 }
 
@@ -233,7 +247,7 @@ int	isFloat(std::string lit, resultPrint &result)
 	{
 		if (lit[i] == 'f')
 			f++;
-		if (lit[i] == '.')
+		if (lit[i] == '.' && lit[i + 1] != '\0')
 		{
 			p++;
 			if (lit[i + 1] == 'f')
@@ -243,6 +257,8 @@ int	isFloat(std::string lit, resultPrint &result)
 			return (1);
 		i++;
 	}
+	if (p != 1)
+		return (1);
 	if (fltConv(lit, result))
 		return (1);
 	if (charConv(lit, result))
@@ -263,20 +279,58 @@ int	dblConv(std::string lit, resultPrint &result)
 	double d = 0;
 
 	n = std::strtod(lit.c_str(), &end);
-	
-	if (n < INT_MIN || n > INT_MAX)
-		return (1);
+
 	if (*end != '\0')
 	{
 		if (!std::isdigit(lit[0]))
 			d = static_cast<double>(lit[0]);
+		if (*end == 'f' && lit.length() == 1)
+			d = static_cast<double>(*end);
+		else if (lit[lit.length() - 1] == 'f')
+		{
+			float f = std::strtof(lit.c_str(), &end);
+			d = static_cast<double>(f);
+		}
 	}
 	else
 		d = static_cast<double>(n);
 	result.dbl = d;
-	
-	std::cout << "Double conversion done." << std::endl;
 
+	return (0);
+}
+
+int	isDouble(std::string lit, resultPrint &result)
+{
+	size_t i = 0;
+	int	p = 0;
+
+	if (lit.empty())
+		return (1);
+	if (lit[i] == '+' || lit[i] == '-')
+		i++;
+	while (i < lit.length())
+	{
+		if (lit[i] == '.' && lit[i + 1] != '\0' && lit[i - 1] != '\0')
+		{
+			p++;
+			if (lit[i + 1] == 'f' || !std::isdigit(lit[i + 1]) || !std::isdigit(lit[i - 1]))
+				return (1);
+		}
+		if ((!std::isdigit(lit[i]) && lit[i] != '.'))
+			return (1);
+
+		i++;
+	}
+	if (p != 1)
+		return (1);
+	if (dblConv(lit, result))
+		return (1);
+	if (charConv(lit, result))
+		return (1);
+	if (intConv(lit, result))
+		return (1);
+	if (fltConv(lit, result))
+		return (1);
 	return (0);
 }
 
@@ -311,79 +365,70 @@ int	pseudo_detectors(std::string lit)
 		return (0);
 }
 
-int	isDouble(std::string lit, resultPrint &result)
-{
-	size_t i = 0;
-	int	p = 0;
-
-	if (lit.empty())
-		return (1);
-	if (lit[i] == '+' || lit[i] == '-')
-		i++;
-	while (i < lit.length())
-	{
-		if (lit[i] == '.')
-		{
-			p++;
-			if (lit[i + 1] == 'f' || !std::isdigit(lit[i + 1]) || !std::isdigit(lit[i - 1]))
-				return (1);
-		}
-		if ((!std::isdigit(lit[i]) && lit[i] != '.'))
-			return (1);
-
-		i++;
-	}
-	if (p != 1)
-		return (1);
-	if (dblConv(lit, result))
-		return (1);
-	if (charConv(lit, result))
-		return (1);
-	if (intConv(lit, result))
-		return (1);
-	if (fltConv(lit, result))
-		return (1);
-	return (0);
-}
 
 void	result_printer(resultPrint result)
 {
-	if (result.chr == '\0')
-		std::cout << "CHAR result: Non displayable" << std::endl;
+	if (result.MaxMin || result.NoPrint)
+		std::cout << "char: impossible" << std::endl;
+	else if (result.chr == '\0')
+		std::cout << "char: Non displayable" << std::endl;
 	else
-		std::cout << "CHAR result: " << result.chr << std::endl;
-	std::cout << "INT result: " << result.in << std::endl;
-	std::cout << "FLOAT result: " << std::fixed << std::setprecision(1)
+		std::cout << "char: " << "'" << result.chr << "'" << std::endl;
+	
+	if (result.MaxMin)
+		std::cout << "int: impossible" << std::endl;
+	else
+		std::cout << "int: " << result.in << std::endl;
+	
+	std::cout << "float: " << std::fixed << std::setprecision(1)
 				<< result.flt << "f" << std::endl;
-	std::cout << "DOUBLE result: " << std::fixed << std::setprecision(1)
+	
+	std::cout << "double: " << std::fixed << std::setprecision(1)
 				<< result.dbl << std::endl;
 }
+
+
 int	detector(std::string lit, resultPrint &result)
 {
 	if (!isChar(lit, result))
-		std::cout << "CHAR" << std::endl;
+		return (0);
 	else if (!isInt(lit, result))
-		std::cout << "INT" << std::endl;
+		return (0);
 	else if (!isFloat(lit, result))
-		std::cout << "FLOAT" << std::endl;
+		return (0);
 	else if (!isDouble(lit, result))
-		std::cout << "DOUBLE" << std::endl;
+		return (0);
 	else
 		return (1);
 
 	return (0);
 }
 
-void ScalarConverter::convert(std::string lit, resultPrint result)
+void	initStruct(resultPrint &result)
 {
+	(void)result;
+	result.MaxMin = false;
+	result.NoPrint = false;
+	result.chr = '\0';
+	result.in = 0;
+	result.flt = 0;
+	result.dbl = 0;
+}
+
+void ScalarConverter::convert(std::string lit)
+{
+	resultPrint	result;
+
+	initStruct(result);
 	if (pseudo_detectors(lit))
 		return ;
 	if (detector(lit, result))
-		std::cout << "BAD\n" << std::endl;
-	else
 	{
-		std::cout << "GOOD\n" << std::endl;
-		result_printer(result);
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
 	}
-
+	else
+		result_printer(result);
 }

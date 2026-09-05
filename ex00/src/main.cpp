@@ -6,25 +6,14 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/01 11:52:11 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/04 11:01:44 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/05 15:12:41 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 
-void	initStruct(resultPrint &result)
-{
-	(void)result;
-	result.psd = false;
-	result.chr = '\0';
-	result.in = 0;
-	result.flt = 0;
-	result.dbl = 0;
-}
-
 int	main(int argc, char **argv)
 {
-	resultPrint	result;
 
 	if (argc != 2)
 	{
@@ -32,8 +21,7 @@ int	main(int argc, char **argv)
 		return 1;
 	}
 
-	initStruct(result);
-	ScalarConverter::convert(argv[1], result);
+	ScalarConverter::convert(argv[1]);
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 11:49:17 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/03 20:50:32 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/05 19:45:02 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 
 struct	resultPrint
 {
-	bool	psd;
+	bool	MaxMin;
+	bool	NoPrint;
 
 	char	chr;
 	int		in;
@@ -30,14 +31,14 @@ struct	resultPrint
 };
 
 class	ScalarConverter
-{
-	public:
+{	
+	public: 
+		static void convert(std::string lit);
+	private:
 		ScalarConverter();
 		ScalarConverter(const ScalarConverter &other);
 		ScalarConverter &operator=(const ScalarConverter &value);
 		~ScalarConverter();
-		
-		static void convert(std::string lit, resultPrint result);
 };
 
 #endif
