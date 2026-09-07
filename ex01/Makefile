@@ -6,11 +6,11 @@
 #    By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/06 18:52:09 by cacortes          #+#    #+#              #
-#    Updated: 2026/09/06 19:14:07 by cacortes         ###   ########.fr        #
+#    Updated: 2026/09/07 19:52:49 by cacortes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = src/main.cpp src/ScalarConverter.cpp
+SRCS = src/main.cpp src/Serializatior.cpp
 NAME = serializer
 
 CC = c++

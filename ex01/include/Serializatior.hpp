@@ -6,12 +6,16 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/06 19:35:03 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/06 21:34:41 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/07 21:34:44 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERIALIZATOR_HPP
 #define SERIALIZATOR_HPP
+
+#include <string>
+#include <iostream>
+#include <stdint.h>
 
 struct	Data
 {
@@ -19,16 +23,16 @@ struct	Data
 	int	DataMember2;
 };
 
-class	 Serialize
+class	 Serializer
 {
 	public:
-		uintptr_t serialize(Data* ptr);
-		Data* deserialize(uintptr_t raw);
+		static uintptr_t serialize(Data* ptr);
+		static Data* deserialize(uintptr_t raw);
 	private:
-		Serialize();
-		Serialize(const Serialize &other);
-		Serialize &operator=(const Serialize &value);
-		~Serialize();		
+		Serializer();
+		Serializer(const Serializer &other);
+		Serializer &operator=(const Serializer &value);
+		~Serializer();		
 };
 
 #endif 

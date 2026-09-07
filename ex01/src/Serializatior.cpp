@@ -6,43 +6,43 @@
 /*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/06 19:53:35 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/06 21:01:45 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/07 21:37:54 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Serializatior.hpp"
 
-Serialize::Serialize()
+Serializer::Serializer()
 {
-	std::cout << "Serialize default constructor called." << std::endl;
+	std::cout << "Serializer default constructor called." << std::endl;
 }
 
-Serialize::Serialize(const Serialize &other)
+Serializer::Serializer(const Serializer &other)
 {
 	*this = other;
-	std::cout << "Serialize default copy constructor called." << std::endl;
+	std::cout << "Serializer default copy constructor called." << std::endl;
 }
 
-Serialize &Serialize::operator=(const Serialize &value)
+Serializer &Serializer::operator=(const Serializer &value)
 {
 	(void)value;
-	std::cout << "Serialize assigment operator called." << std::endl;
+	std::cout << "Serializer assigment operator called." << std::endl;
 
 	return *this;
 }
 
-Serialize::~Serialize()
+Serializer::~Serializer()
 {
-	std::cout << "Serialize destructor called" << std::endl;
+	std::cout << "Serializer destructor called" << std::endl;
 }
 
 
-uintptr_t serialize(Data* ptr)
+uintptr_t Serializer::serialize(Data* ptr)
 {
 	return(reinterpret_cast<uintptr_t>(ptr));
 }
 
-Data* deserialize(uintptr_t raw)
+Data* Serializer::deserialize(uintptr_t raw)
 {
 	return(reinterpret_cast<Data*>(raw));
 }
