@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Functions.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cacortes <cacortes@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/08 10:21:08 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/08 14:30:30 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/09 11:31:03 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void identify(Base& p)
 {
 	try
 	{
-		dynamic_cast<ClassA&>(p);
+		ClassA& a = dynamic_cast<ClassA&>(p);
+		(void)a;
 		std::cout << "Type of object: A" << std::endl;
 		return;
 	}
@@ -49,7 +50,8 @@ void identify(Base& p)
 
 	try
 	{
-		dynamic_cast<ClassB&>(p);
+		ClassB& b = dynamic_cast<ClassB&>(p);
+		(void)b;
 		std::cout << "Type of object: B" << std::endl;
 		return;
 	}
@@ -60,7 +62,8 @@ void identify(Base& p)
 
 	try
 	{
-		dynamic_cast<ClassC&>(p);
+		ClassC& c = dynamic_cast<ClassC&>(p);
+		(void)c;
 		std::cout << "Type of object: C" << std::endl;
 		return;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cacortes <cacortes@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 11:39:02 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/05 19:53:01 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/09 11:14:29 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int	charConv(std::string lit, resultPrint &result)
 	{
 		if (*end == '.')
 		{
+				if (value < 0 || value > 127)
+				{
+					result.MaxMinC = true;
+					return (0);
+				}
 				if (lit[lit.length() - 1] == 'f')
 				{
 					float f = std::strtof(lit.c_str(), &end);
@@ -62,11 +67,12 @@ int	charConv(std::string lit, resultPrint &result)
 				else
 				{
 					double d = std::strtod(lit.c_str(), &end);
-					c = static_cast<char>(d);					
+					c = static_cast<char>(d);			
 				}
+				c = static_cast<char>(value);
 				if (!std::isprint(static_cast<unsigned char>(c)))
 				{
-					c = '\0';
+					result.NoPrint = true;
 					return (0);
 				}
 		}
@@ -79,12 +85,12 @@ int	charConv(std::string lit, resultPrint &result)
 
 	if (value < 0 || value > 127)
 	{
-		result.NoPrint = true;
+		result.MaxMinC = true;
 		return (0);
 	}
 	if (!std::isprint(value))
 	{
-		c = '\0';
+		result.NoPrint = true;
 		return (0);
 	}
 	
@@ -138,7 +144,7 @@ int	intConv(std::string lit, resultPrint &result)
 	n = std::strtol(lit.c_str(), &end, 10);
 	if (n < INT_MIN || n > INT_MAX)
 	{
-		result.MaxMin = true;
+		result.MaxMinI = true;
 		return (0);
 	}
 	if (*end != '\0')
@@ -147,20 +153,20 @@ int	intConv(std::string lit, resultPrint &result)
 			i = static_cast<int>(lit[0]);
 		else if (lit[lit.length() - 1] == 'f')
 		{
-			float f = std::strtof(lit.c_str(), &end);
-			if (f < INT_MIN || f > INT_MAX)
+			double d = std::strtod(lit.c_str(), &end);
+			if (d < INT_MIN || d > INT_MAX)
 			{
-				result.MaxMin = true;
+				result.MaxMinI = true;
 				return (0);
 			}
-			i = static_cast<int>(f);
+			i = static_cast<int>(d);
 		}
 		else if(*end == '.')
 		{
 			double d = std::strtod(lit.c_str(), &end);
 			if (d < INT_MIN || d > INT_MAX)
 			{
-				result.MaxMin = true;
+				result.MaxMinI = true;
 				return (0);
 			}
 			i = static_cast<int>(d);					
@@ -368,14 +374,14 @@ int	pseudo_detectors(std::string lit)
 
 void	result_printer(resultPrint result)
 {
-	if (result.MaxMin || result.NoPrint)
-		std::cout << "char: impossible" << std::endl;
-	else if (result.chr == '\0')
+	if (result.NoPrint)
 		std::cout << "char: Non displayable" << std::endl;
+	else if (result.MaxMinC)
+		std::cout << "char: impossible" << std::endl;
 	else
 		std::cout << "char: " << "'" << result.chr << "'" << std::endl;
 	
-	if (result.MaxMin)
+	if (result.MaxMinI)
 		std::cout << "int: impossible" << std::endl;
 	else
 		std::cout << "int: " << result.in << std::endl;
@@ -407,7 +413,8 @@ int	detector(std::string lit, resultPrint &result)
 void	initStruct(resultPrint &result)
 {
 	(void)result;
-	result.MaxMin = false;
+	result.MaxMinI = false;
+	result.MaxMinC = false;
 	result.NoPrint = false;
 	result.chr = '\0';
 	result.in = 0;

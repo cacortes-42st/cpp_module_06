@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cacortes <cacortes@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 11:49:17 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/05 19:45:02 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/09 10:23:21 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 
 struct	resultPrint
 {
-	bool	MaxMin;
+	bool	MaxMinI;
+	bool	MaxMinC;
 	bool	NoPrint;
 
 	char	chr;
