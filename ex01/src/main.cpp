@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cacortes <cacortes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cacortes <cacortes@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/06 21:35:25 by cacortes          #+#    #+#             */
-/*   Updated: 2026/09/07 21:30:18 by cacortes         ###   ########.fr       */
+/*   Updated: 2026/09/09 12:02:54 by cacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main()
 	std::cout << "New DataObject: " << result << std::endl;
 	
 	if (&DataObject == result)
-		std::cout << "\nThe two Data objects are equal."<< std::endl;
+		std::cout << "\nThe two Data objects are equal: " << result->DataMember1 << std::endl;
 	else
 		std::cout << "\nThe two Data objects aren't equal."<< std::endl;
 	
