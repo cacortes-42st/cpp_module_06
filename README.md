@@ -10,19 +10,19 @@
 
 ### Mandatory requirements completed:
 
-* To create a `ScalarConverter` class that contains:
-  * *static* method `convert`:
-    * Takes a string that represents a literal in c++ in its most common form.
-    * Returns the literal displayed as:
+* Create a `ScalarConverter` class that:
+  * Has a *static* method `convert`:
+    * It takes a string that represents a literal in c++ in its most common form.
+    * It returns the literal displayed as:
       * `char`
       * `int`
       * `float`
       * `double`
-    * Only *decimal* notation is used, except for `char` parameters.
-    * Non-displayable characters can't be used as inputs. If the conversion to `char` produces a non-displayable character, it prints an informative message: `Non displayable`.
-  * The class is not instantiable by users.
-* The program *detects* the literal parameter, *converts* it to its *true type* and then converts it to the other *three* data types. Finally all the results are shown below.
-* WARNING: Not all floats are displayable. Sometimes when a huge float is passed as parameter, the result seems wrong because it is technically impossible to display.
+    * Only uses *decimal* notation, except for `char` parameters.
+    * It cannot use non-displayable characters as inputs. If the conversion to `char` produces a non-displayable character, it prints an informative message: `Non displayable`.
+  * Can´t be instantiable by users.
+* The program *detects* the literal parameter, *converts* it to its *true type* and then converts it to the other *three* data types. Finally, all the results are shown below.
+* **WARNING:** Not all floats are displayable. Sometimes when a huge float is passed as parameter, the result seems wrong because it is technically impossible to display.
 
 ### What can we learn about this exercise?:
 
@@ -37,17 +37,17 @@ The purpose of this exercise is to understand how **scalar type conversion** wor
 
 ### Mandatory requirements completed:
 
-* To create a `Serializer` class.
+* Create a `Serializer` class that:
   * Is not instantiable.
   * Has two static member functions:
     * `uintptr_t serialize(Data* ptr);`: converts a `Data` pointer into a `uintptr_t`.
     * `Data* deserialize(uintptr_t raw);`: converts the `uintptr_t` value back into a `Data` pointer.
-* To create a `Data` structure for testing the serialization and deserialization.
+* Create a `Data` structure for testing the serialization and deserialization.
 * In the program `serialize` is used on the `Data` object and its return value is passed to `deserialize`. Then it checks that the return value is equal to the original pointer.
 
 ### What can we learn about this exercise?:
 
-This exercise introduces the process of **serialization and deserialization** process, working with pointers and converting them to and from an unsigned integer type capable of holding a pointer.
+This exercise introduces the process of **serialization and deserialization**, working with pointers and converting them to and from an unsigned integer type capable of holding a pointer.
 
 ### Output example:
 
@@ -58,14 +58,14 @@ This exercise introduces the process of **serialization and deserialization** pr
 
 ### Mandatory requirements completed:
 
-* To create a `Base` class with:
+* Create a `Base` class with:
   * A public virtual destructor.
-* To create three empty classes derived from `Base`: `A`, `B` and `C`.
+* Create three empty classes derived from `Base`: `A`, `B` and `C`.
 * The following functions are implemented:
   * `Base* generate(void);`
     * It randomly instantiates `A`, `B` or `C`.
     * It returns the object instantiated as a `Base` pointer.
-    * For the random choice implementation are used `srand(std::time(NULL))` and `rand() % 3`;
+    * The random choice is implemented using `srand(std::time(NULL))` and `rand() % 3`;
   * `void identify(Base* p);`
     * It prints the real type of the object (`A`, `B` or `C`) pointed to by `p`.
   * `void identify(Base& p);`
