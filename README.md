@@ -88,5 +88,6 @@ This exercise focuses on **identifying the real type of an object at runtime** a
 #### Last but not least, check out these other repositories if you feel lost, they helped me a lot through the project:
 
 https://github.com/Kromolux/42_cpp_06
+
 https://github.com/tblaase/CPP-Module-06
 
