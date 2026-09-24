@@ -67,9 +67,9 @@ This exercise introduces the process of **serialization and deserialization**, w
     * It returns the object instantiated as a `Base` pointer.
     * The random choice is implemented using `srand(std::time(NULL))` and `rand() % 3`;
   * `void identify(Base* p);`
-    * It prints the real type of the object (`A`, `B` or `C`) pointed to by `p`.
+    * It prints the real type of the object (`A`, `B` or `C`) *pointed* to by `p`.
   * `void identify(Base& p);`
-    * It prints the real type of the object (`A`, `B` or `C`) referenced by `p`.
+    * It prints the real type of the object (`A`, `B` or `C`) *referenced* by `p`.
     * No pointer is used inside this function.
 * The possible output types are:
   * `A`
